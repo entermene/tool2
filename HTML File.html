@@ -34,8 +34,8 @@
             cursor: pointer; /* Adding pointer style to indicate clickability */
         }
 
-        #endMessageOverlay {
-            display: none; /* Initially hide the overlay */
+        #endMessageOverlay, #paintingModeOverlay {
+            display: none; /* Initially hide the overlays */
             position: fixed;
             top: 0;
             left: 0;
@@ -45,8 +45,8 @@
             z-index: 2;
         }
 
-        #endMessage {
-            display: none; /* Initially hide the end message */
+        #endMessage, #paintingModeMessage {
+            display: none; /* Initially hide the messages */
             margin-top: 20px;
             position: fixed;
             top: 50%;
@@ -59,29 +59,83 @@
             z-index: 3;
         }
 
-        #restartButton {
-            display: none; /* Initially hide the restart button */
+        #endButton, #enterPaintModeButton, #endButton {
+            display: none; /* Initially hide the buttons */
             cursor: pointer;
             color: #007bff;
             margin-top: 10px;
             font-size: 18px;
             z-index: 4;
             position: fixed;
-            top: 54%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+        }
+
+        #colorButtons {
+            display: none; /* Initially hide the color buttons */
+            margin-top: 20px;
+        }
+
+        .colorButton {
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+
+        .board-container {
+            display: none; /* Initially hide the board container */
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            grid-template-rows: repeat(5, 50px);
+            grid-gap: 5px;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
 <h1>Welcome to My Interactive Page</h1>
-<p></p>
 
-<img src="assets/p1.png" alt="Description of your image" onclick="changeImage()">
+<div id="colorButtons">
+    <div class="colorButton" style="background-color: red" onclick="selectColor('red')"></div>
+    <div class="colorButton" style="background-color: blue" onclick="selectColor('blue')"></div>
+    <div class="colorButton" style="background-color: green" onclick="selectColor('green')"></div>
+    <div class="colorButton" style="background-color: yellow" onclick="selectColor('yellow')"></div>
+    <div class="colorButton" style="background-color: purple" onclick="selectColor('purple')"></div>
+</div>
+
+<div class="board-container">
+    <div class="board" id="board1"></div>
+    <div class="board" id="board2"></div>
+    <div class="board" id="board3"></div>
+    <div class="board" id="board4"></div>
+    <div class="board" id="board5"></div>
+</div>
+
+<img src="assets/p1.png" alt="Description of your image" onclick="showNextImage()">
 
 <div id="endMessageOverlay"></div>
 <div id="endMessage"></div>
-<button id="restartButton" onclick="restart()">Restart</button>
+
+<div id="paintingModeOverlay"></div>
+<div id="paintingModeMessage"></div>
+<!--<button id="endButton" onclick="restart()">End</button>-->
+<button id="enterPaintModeButton" onclick="enterPaintMode()">Enter Painting Mode</button>
+<button id="endButton" onclick="endPaintingMode()">End</button>
 
 <script>
         const images = [
@@ -90,44 +144,122 @@
         ];
 
         let currentIndex = 0;
+        let selectedColor = '';
+        let paintingMode = false;
 
-        function changeImage() {
-            const img = document.querySelector('img');
-            currentIndex = (currentIndex + 1) % images.length;
-            img.src = images[currentIndex];
+        function selectColor(color) {
+            selectedColor = color;
+        }
 
-            // Show end message and restart button at the end of a round
-            if (currentIndex === 0) {
-                showEndMessage();
+        function createBoard(boardId) {
+            const board = document.getElementById(boardId);
+
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.addEventListener('click', () => colorCell(cell));
+                    board.appendChild(cell);
+                }
             }
         }
 
-        function showEndMessage() {
-            const endMessageOverlay = document.getElementById('endMessageOverlay');
-            const endMessage = document.getElementById('endMessage');
-            const restartButton = document.getElementById('restartButton');
+        function colorCell(cell) {
+            if (paintingMode && selectedColor !== '') {
+                cell.style.backgroundColor = selectedColor;
+            }
+        }
 
-            endMessageOverlay.style.display = 'block';
-            endMessage.innerHTML = "<p>End of the round. Thank you for watching!</p>";
-            restartButton.style.display = 'block';
-            endMessage.style.display = 'block';
+        function showNextImage() {
+            const img = document.querySelector('img');
+            img.src = images[currentIndex];
+            currentIndex++;
+
+            if (currentIndex === images.length) {
+                document.getElementById('enterPaintModeButton').style.display = 'block';
+<!--                document.getElementById('endButton').style.display = 'block';-->
+            }
+        }
+
+        function enterPaintMode() {
+            paintingMode = true;
+            document.getElementById('enterPaintModeButton').style.display = 'none';
+<!--            document.getElementById('endButton').style.display = 'none';-->
+            document.getElementById('endButton').style.display = 'block';
+            document.getElementById('colorButtons').style.display = 'block';
+            document.querySelector('.board-container').style.display = 'flex';
+            // Hide the image when entering painting mode
+            document.querySelector('img').style.display = 'none';
+
+            // Create boards
+            createBoard('board1');
+            createBoard('board2');
+            createBoard('board3');
+            createBoard('board4');
+            createBoard('board5');
+        }
+
+        function endPaintingMode() {
+            showEndMessage();
+        }
+
+        function showEndMessage() {
+<!--            const endMessageOverlay = document.getElementById('endMessageOverlay');-->
+<!--            const endMessage = document.getElementById('endMessage');-->
+            const endButton = document.getElementById('endButton');
+
+<!--            endMessageOverlay.style.display = 'block';-->
+<!--            endMessage.innerHTML = "<p>End of the round. Thank you for watching!</p>";-->
+
+            // Show the end button
+            endButton.style.display = 'block';
+
+<!--            endMessage.style.display = 'block';-->
         }
 
         function restart() {
             // Reset state for a restart
-            const endMessageOverlay = document.getElementById('endMessageOverlay');
-            const endMessage = document.getElementById('endMessage');
-            const restartButton = document.getElementById('restartButton');
+<!--            const endMessageOverlay = document.getElementById('endMessageOverlay');-->
+<!--            const endMessage = document.getElementById('endMessage');-->
+            const endButton = document.getElementById('endButton');
+            const paintingModeOverlay = document.getElementById('paintingModeOverlay');
+            const paintingModeMessage = document.getElementById('paintingModeMessage');
+            const enterPaintModeButton = document.getElementById('enterPaintModeButton');
+<!--            const endButton = document.getElementById('endButton');-->
 
             currentIndex = 0;
-            endMessageOverlay.style.display = 'none';
-            endMessage.style.display = 'none';
-            restartButton.style.display = 'none';
+            paintingMode = false;
+            selectedColor = '';
+<!--            endMessageOverlay.style.display = 'none';-->
+<!--            endMessage.style.display = 'none';-->
+            endButton.style.display = 'none';
+            paintingModeOverlay.style.display = 'none';
+            paintingModeMessage.style.display = 'none';
+            enterPaintModeButton.style.display = 'none';
+<!--            endButton.style.display = 'none';-->
+
+            // Clear the boards
+            for (let i = 1; i <= 5; i++) {
+                const boardId = `board${i}`;
+                const board = document.getElementById(boardId);
+                const cells = board.getElementsByClassName('cell');
+                Array.from(cells).forEach(cell => {
+                    cell.style.backgroundColor = '';
+                });
+            }
 
             // Show the first image again
             const img = document.querySelector('img');
             img.src = images[currentIndex];
+            currentIndex++;
+
+            // Hide the color buttons and boards initially
+            document.getElementById('colorButtons').style.display = 'none';
+            document.querySelector('.board-container').style.display = 'none';
         }
+
+        // Initialize the board when the page loads
+        window.onload = createBoard('board1');
     </script>
 </body>
 </html>
