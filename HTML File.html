@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
+    <title>Your Interactive Page</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Cursive', sans-serif;
             line-height: 1.6;
             margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         h1 {
+            font-size: 36px;
             color: #333;
         }
 
         p {
-            font-size: 16px;
+            font-size: 20px;
             color: #666;
         }
 
@@ -25,18 +30,104 @@
             height: auto;
             display: block;
             margin: 20px 0;
-            /* 调整图片大小 */
-            width: 100%; /* 图片宽度占据父元素100% */
+            width: 100%;
+            cursor: pointer; /* Adding pointer style to indicate clickability */
+        }
+
+        #endMessageOverlay {
+            display: none; /* Initially hide the overlay */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            z-index: 2;
+        }
+
+        #endMessage {
+            display: none; /* Initially hide the end message */
+            margin-top: 20px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 3;
+        }
+
+        #restartButton {
+            display: none; /* Initially hide the restart button */
+            cursor: pointer;
+            color: #007bff;
+            margin-top: 10px;
+            font-size: 18px;
+            z-index: 4;
+            position: fixed;
+            top: 54%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
 <body>
-<h1>Welcome to My Page</h1>
+<h1>Welcome to My Interactive Page</h1>
 <p></p>
 
-<img src="assets/p4.png" alt="Description of your image">
-<img src="assets/p2.png" alt="Description of your image">
-<img src="assets/p3.png" alt="Description of your image">
-<!-- 其他静态内容 -->
+<img src="assets/p1.png" alt="Description of your image" onclick="changeImage()">
+
+<div id="endMessageOverlay"></div>
+<div id="endMessage"></div>
+<button id="restartButton" onclick="restart()">Restart</button>
+
+<script>
+        const images = [
+            "assets/p1.png", "assets/p2.png", "assets/p3.png",
+            "assets/1.png", "assets/2.png", "assets/3.png"
+        ];
+
+        let currentIndex = 0;
+
+        function changeImage() {
+            const img = document.querySelector('img');
+            currentIndex = (currentIndex + 1) % images.length;
+            img.src = images[currentIndex];
+
+            // Show end message and restart button at the end of a round
+            if (currentIndex === 0) {
+                showEndMessage();
+            }
+        }
+
+        function showEndMessage() {
+            const endMessageOverlay = document.getElementById('endMessageOverlay');
+            const endMessage = document.getElementById('endMessage');
+            const restartButton = document.getElementById('restartButton');
+
+            endMessageOverlay.style.display = 'block';
+            endMessage.innerHTML = "<p>End of the round. Thank you for watching!</p>";
+            restartButton.style.display = 'block';
+            endMessage.style.display = 'block';
+        }
+
+        function restart() {
+            // Reset state for a restart
+            const endMessageOverlay = document.getElementById('endMessageOverlay');
+            const endMessage = document.getElementById('endMessage');
+            const restartButton = document.getElementById('restartButton');
+
+            currentIndex = 0;
+            endMessageOverlay.style.display = 'none';
+            endMessage.style.display = 'none';
+            restartButton.style.display = 'none';
+
+            // Show the first image again
+            const img = document.querySelector('img');
+            img.src = images[currentIndex];
+        }
+    </script>
 </body>
 </html>
