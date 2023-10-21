@@ -15,6 +15,16 @@
             text-align: center;
         }
 
+<!--          <style>-->
+<!--    .board {-->
+<!--      /* Add any other styling you have for the .board class */-->
+<!--      margin-bottom: 10px; /* Adjust this value based on your layout */-->
+<!--      width: 100px; /* Add width for better visualization */-->
+<!--      height: 100px; /* Add height for better visualization */-->
+<!--      background-color: #ccc; /* Add background color for better visualization */-->
+<!--      border: 1px solid #000; /* Add border for better visualization */-->
+<!--    }-->
+
         h1 {
             font-size: 36px;
             color: #333;
@@ -34,43 +44,43 @@
             cursor: pointer; /* Adding pointer style to indicate clickability */
         }
 
-        #endMessageOverlay, #paintingModeOverlay {
-            display: none; /* Initially hide the overlays */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-            z-index: 2;
-        }
+<!--        #endMessageOverlay, #paintingModeOverlay {-->
+<!--            display: none; /* Initially hide the overlays */-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */-->
+<!--            z-index: 2;-->
+<!--        }-->
 
-        #endMessage, #paintingModeMessage {
-            display: none; /* Initially hide the messages */
-            margin-top: 20px;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 3;
-        }
+<!--        #endMessage, #paintingModeMessage {-->
+<!--            display: none; /* Initially hide the messages */-->
+<!--            margin-top: 20px;-->
+<!--            position: fixed;-->
+<!--            top: 50%;-->
+<!--            left: 50%;-->
+<!--            transform: translate(-50%, -50%);-->
+<!--            background-color: #fff;-->
+<!--            padding: 20px;-->
+<!--            border: 1px solid #ddd;-->
+<!--            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);-->
+<!--            z-index: 3;-->
+<!--        }-->
 
-        #endButton, #enterPaintModeButton, #endButton {
-            display: none; /* Initially hide the buttons */
-            cursor: pointer;
-            color: #007bff;
-            margin-top: 10px;
-            font-size: 18px;
-            z-index: 4;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+<!--        #endButton, #enterPaintModeButton, #endButton {-->
+<!--            display: none; /* Initially hide the buttons */-->
+<!--            cursor: pointer;-->
+<!--            color: #007bff;-->
+<!--            margin-top: 10px;-->
+<!--            font-size: 18px;-->
+<!--            z-index: 4;-->
+<!--            position: fixed;-->
+<!--            top: 50%;-->
+<!--            left: 50%;-->
+<!--            transform: translate(-50%, -50%);-->
+<!--        }-->
 
         #colorButtons {
             display: none; /* Initially hide the color buttons */
@@ -119,11 +129,19 @@
 </div>
 
 <div class="board-container">
+
     <div class="board" id="board1"></div>
     <div class="board" id="board2"></div>
     <div class="board" id="board3"></div>
     <div class="board" id="board4"></div>
     <div class="board" id="board5"></div>
+<!--    <div class="board" id="board6"></div>-->
+<!--    <div class="board" id="board7"></div>-->
+<!--    <div class="board" id="board8"></div>-->
+<!--    <div class="board" id="board9"></div>-->
+<!--    <div class="board" id="board10"></div>-->
+
+
 </div>
 
 <img src="assets/p1.png" alt="Description of your image" onclick="showNextImage()">
@@ -133,9 +151,9 @@
 
 <div id="paintingModeOverlay"></div>
 <div id="paintingModeMessage"></div>
-<!--<button id="endButton" onclick="restart()">End</button>-->
+<!--<button id="resumeButton" onclick="restart()">Resume</button>-->
 <button id="enterPaintModeButton" onclick="enterPaintMode()">Enter Painting Mode</button>
-<button id="endButton" onclick="endPaintingMode()">End</button>
+<!--<button id="endButton" onclick="endPaintingMode()">End</button>-->
 
 <script>
         const images = [
@@ -185,7 +203,7 @@
             paintingMode = true;
             document.getElementById('enterPaintModeButton').style.display = 'none';
 <!--            document.getElementById('endButton').style.display = 'none';-->
-            document.getElementById('endButton').style.display = 'block';
+<!--            document.getElementById('endButton').style.display = 'block';-->
             document.getElementById('colorButtons').style.display = 'block';
             document.querySelector('.board-container').style.display = 'flex';
             // Hide the image when entering painting mode
@@ -197,22 +215,23 @@
             createBoard('board3');
             createBoard('board4');
             createBoard('board5');
+
         }
 
         function endPaintingMode() {
-            showEndMessage();
+<!--            showEndMessage();-->
         }
 
         function showEndMessage() {
 <!--            const endMessageOverlay = document.getElementById('endMessageOverlay');-->
 <!--            const endMessage = document.getElementById('endMessage');-->
-            const endButton = document.getElementById('endButton');
+<!--            const endButton = document.getElementById('endButton');-->
 
 <!--            endMessageOverlay.style.display = 'block';-->
 <!--            endMessage.innerHTML = "<p>End of the round. Thank you for watching!</p>";-->
 
             // Show the end button
-            endButton.style.display = 'block';
+<!--            endButton.style.display = 'block';-->
 
 <!--            endMessage.style.display = 'block';-->
         }
@@ -232,14 +251,14 @@
             selectedColor = '';
 <!--            endMessageOverlay.style.display = 'none';-->
 <!--            endMessage.style.display = 'none';-->
-            endButton.style.display = 'none';
+<!--            endButton.style.display = 'none';-->
             paintingModeOverlay.style.display = 'none';
             paintingModeMessage.style.display = 'none';
             enterPaintModeButton.style.display = 'none';
 <!--            endButton.style.display = 'none';-->
 
             // Clear the boards
-            for (let i = 1; i <= 5; i++) {
+            for (let i = 1; i <= 10; i++) {
                 const boardId = `board${i}`;
                 const board = document.getElementById(boardId);
                 const cells = board.getElementsByClassName('cell');
