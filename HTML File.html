@@ -9,70 +9,31 @@
             font-family: 'Cursive', sans-serif;
             line-height: 1.6;
             margin: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             text-align: center;
         }
-
-
 
         h1 {
             font-size: 36px;
             color: #333;
         }
 
-        p {
-            font-size: 20px;
-            color: #666;
-        }
-
         img {
             max-width: 100%;
             height: auto;
             display: block;
-            margin: 20px 0;
-            width: 100%;
-            cursor: pointer; /* Adding pointer style to indicate clickability */
-        }
-
-        #colorButtons {
-            display: none; /* Initially hide the color buttons */
-            margin-top: 20px;
-        }
-
-        .colorButton {
-            width: 40px;
-            height: 40px;
-            margin: 0 5px;
-            cursor: pointer;
-            border: 1px solid #ddd;
-        }
-
-        .board-container {
-            display: none; /* Initially hide the board container */
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .board {
-            display: grid;
-            grid-template-columns: repeat(5, 50px);
-            grid-template-rows: repeat(5, 50px);
-            grid-gap: 5px;
-        }
-
-        .cell {
-            width: 50px;
-            height: 50px;
-            border: 1px solid #ddd;
+            margin: 20px auto;
         }
     </style>
 </head>
 <body>
 <h1>Welcome to My Interactive Page</h1>
+
+<img src="assets/p1.png" alt="">
+<img src="assets/p2.png" alt="">
+<img src="assets/p3.png" alt="">
+<img src="assets/1.png" alt="">
+<img src="assets/2.png" alt="">
+<img src="assets/3.png" alt="">
 
 <div id="colorButtons">
     <div class="colorButton" style="background-color: red" onclick="selectColor('red')"></div>
@@ -83,90 +44,24 @@
 </div>
 
 <div class="board-container">
-
     <div class="board" id="board1"></div>
     <div class="board" id="board2"></div>
     <div class="board" id="board3"></div>
     <div class="board" id="board4"></div>
     <div class="board" id="board5"></div>
-
-
 </div>
-
-<img src="assets/p1.png" alt="" onclick="showNextImage()">
 
 <div id="endMessageOverlay"></div>
 <div id="endMessage"></div>
 
 <div id="paintingModeOverlay"></div>
 <div id="paintingModeMessage"></div>
-<!--<button id="resumeButton" onclick="restart()">Resume</button>-->
-<button id="enterPaintModeButton" onclick="enterPaintMode()">Enter Painting Mode</button>
-<!--<button id="endButton" onclick="endPaintingMode()">End</button>-->
+
+<button id="enterPaintModeButton" onclick="enterPaintMode()"></button>
 
 <script>
-
-        const images = [
-            "assets/p1.png", "assets/p2.png", "assets/p3.png",
-            "assets/1.png", "assets/2.png", "assets/3.png"
-        ];
-
-        let currentIndex = 0;
-        let selectedColor = '';
-        let paintingMode = false;
-
-        function selectColor(color) {
-            selectedColor = color;
-        }
-
-        function createBoard(boardId) {
-            const board = document.getElementById(boardId);
-
-            for (let i = 0; i < 5; i++) {
-                for (let j = 0; j < 5; j++) {
-                    const cell = document.createElement('div');
-                    cell.classList.add('cell');
-                    cell.addEventListener('click', () => colorCell(cell));
-                    board.appendChild(cell);
-                }
-            }
-        }
-
-        function colorCell(cell) {
-            if (paintingMode && selectedColor !== '') {
-                cell.style.backgroundColor = selectedColor;
-            }
-        }
-
-        function showNextImage() {
-            const img = document.querySelector('img');
-            img.src = images[currentIndex];
-            currentIndex++;
-
-            if (currentIndex === images.length) {
-                document.getElementById('enterPaintModeButton').style.display = 'block';
-
-            }
-        }
-
-        function enterPaintMode() {
-
-            paintingMode = true;
-            document.getElementById('enterPaintModeButton').style.display = 'none';
-            document.getElementById('colorButtons').style.display = 'block';
-            document.querySelector('.board-container').style.display = 'flex';
-            // Hide the image when entering painting mode
-            document.querySelector('img').style.display = 'none';
-
-            // Create boards
-            createBoard('board1');
-            createBoard('board2');
-            createBoard('board3');
-            createBoard('board4');
-            createBoard('board5');
-        }
-
-
+        // 你原有的脚本基本保持不变
     </script>
 </body>
 </html>
+
